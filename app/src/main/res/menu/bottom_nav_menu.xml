@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_home_24"/>
+
+    <item android:title="Exam Results"
+        android:id="@+id/ExamResults"
+        android:icon="@drawable/baseline_results_24"/>
+
+    <item android:title="Time Table"
+        android:id="@+id/TimeTable"
+        android:icon="@drawable/baseline_table_chart_24"/>
+</menu>

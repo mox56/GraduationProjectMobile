@@ -7,4 +7,5 @@ data class StudentModel(
     val Semester: String,
     val CGPA: Float,
     val GPA: Float,
+    val password: Int,
     )

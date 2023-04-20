@@ -9,3 +9,4 @@ data class StudentModel(
     val GPA: Float,
     val password: Int,
     )
+

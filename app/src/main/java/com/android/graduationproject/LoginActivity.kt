@@ -1,7 +1,14 @@
 package com.android.graduationproject
 
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import com.android.graduationproject.databinding.ActivityLoginBinding
+
+
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -9,24 +16,41 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
-    private fun signin(email: String, password: String){
-        val retIn = RetrofitInstance.getRetrofitInstance().create(StudentAPI::class.java)
-        val signInInfo = SignInBody(email, password)
-        retIn.signin(signInInfo).enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Toast.makeText(
-                    this@LoginActivity,
-                    t.message,
-                    Toast.LENGTH_SHORT
-                ).show()
+    private lateinit var binding: ActivityLoginBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        initAction()
+    }
+
+    fun initAction(){
+            binding.btnSignin.setOnClickListener{
+            login()
+        }
+    }
+
+    fun login(){
+        val request = UserRequest()
+        request.username=binding.edtUsername.text.toString().trim()
+        request.password=binding.edtPassword.text.toString().trim()
+
+        val retro = Retro().getRetroClientInstance().create(UserApi::class.java)
+        retro.login(request).enqueue(object : Callback<UserResponse> {
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                Log.e("Error", t.message!!)
             }
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.code() == 200) {
-                    Toast.makeText(this@LoginActivity, "Login success!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@LoginActivity, "Login failed!", Toast.LENGTH_SHORT).show()
-                }
+
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                val user = response.body()
+                Log.e("token", user!!.data?.token!!)
+                Log.e("username", user!!.data?.username!!)
             }
         })
-    }
+
+
+        }
 }

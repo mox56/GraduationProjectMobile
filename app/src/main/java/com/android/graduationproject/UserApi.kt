@@ -9,11 +9,11 @@ import retrofit2.http.POST
 
 interface UserApi {
     @Headers("Content-Type:application/json")
-    @POST("login")
+    @POST("/login/")
     fun login(@Body userRequest: UserRequest): Call<UserResponse>
 
     @Headers("Content-Type:application/json")
-    @POST("users")
+    @POST("/users/")
     fun registerUser(
         @Body info: TimeTableFragment
     ): retrofit2.Call<ResponseBody>

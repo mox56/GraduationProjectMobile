@@ -46,8 +46,8 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 val user = response.body()
-                Log.e("token", user!!.data?.token!!)
-                Log.e("username", user!!.data?.username!!)
+                Log.e("token", user?.data?.token?:"token is null")
+                Log.e("username", user?.data?.username?:"username is null")
             }
         })
 

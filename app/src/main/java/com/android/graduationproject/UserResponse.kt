@@ -8,7 +8,7 @@ class UserResponse {
     @Expose
     var data: User? = null
 
-    class User{
+    class User {
         @SerializedName("username")
         @Expose
         var username: String? = null

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Home"
+    <item
         android:id="@+id/home"
-        android:icon="@drawable/baseline_home_24"/>
+        android:icon="@drawable/baseline_home_24"
+        android:title="Home" />
 
-    <item android:title="Exam Results"
+    <item
         android:id="@+id/ExamResults"
-        android:icon="@drawable/baseline_results_24"/>
+        android:icon="@drawable/baseline_results_24"
+        android:title="Exam Results" />
 
-    <item android:title="Time Table"
+    <item
         android:id="@+id/TimeTable"
-        android:icon="@drawable/baseline_table_chart_24"/>
+        android:icon="@drawable/baseline_table_chart_24"
+        android:title="Time Table" />
 </menu>

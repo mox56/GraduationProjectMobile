@@ -1,29 +1,99 @@
 package com.android.graduationproject.view
 
 import android.annotation.SuppressLint
-import android.os.Build.VERSION_CODES.R
+import android.app.ProgressDialog.show
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.NestedScrollView
-import androidx.fragment.app.Fragment
-import com.android.graduationproject.R
-import com.android.graduationproject.TimeTableFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.android.graduationproject.data.ExamResponse
 import com.android.graduationproject.databinding.ActivityMainBinding
-import com.android.graduationproject.utils.APIConsumer
+import com.android.graduationproject.repository.GetRepository
 import com.android.graduationproject.utils.APIService
+import com.android.graduationproject.view_model.MainViewModel
+import com.android.graduationproject.view_model.MainViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import retrofit2.*
 
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var viewModel: MainViewModel
+
     private lateinit var binding: ActivityMainBinding
 
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)}}
+        viewModel = MainViewModel(getRepository= GetRepository())
+        setContentView(binding.root)
+
+        var examList = mutableListOf<>()
+
+
+
+
+
+        val myNumber = intent.getStringExtra("Username")
+        val getRepository = GetRepository()
+        val viewModelFactory = MainViewModelFactory(getRepository)
+
+
+        val examresult = viewModel.getExamresult2(myNumber.toString())
+        viewModel =ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        viewModel.getExamresult2(myNumber.toString())
+        viewModel.myResponse2.observe(this, Observer { response->
+            if(response.isSuccessful){
+
+
+
+
+            }else{
+
+
+            }
+        })
+
+
+
+
+}
+
+
+  /*  private fun getExamResults(){
+        val api = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(APIConsumer::class.java)
+
+        api.getExamResult().enqueue(object : Callback<List<ExamResult>>{
+            override fun onResponse(
+                call: Call<List<ExamResult>>,
+                response: Response<List<ExamResult>>
+            ) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        for (exam in it){
+                            Log.i(TAG, "onResponse: ${exam.Mark}")
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<ExamResult>>, t: Throwable) {
+                Log.i(TAG, "onFailure ${t.message}")
+            }
+
+        })
+    }
+
+}*/
 
 
 

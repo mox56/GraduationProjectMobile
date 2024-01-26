@@ -1,74 +1,145 @@
 package com.android.graduationproject.view
 
 
+import android.app.Application
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NO_HISTORY
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.graduationproject.R
+import com.android.graduationproject.data.AuthResponse
+import com.android.graduationproject.data.BaseResponse
 import com.android.graduationproject.data.LoginBody
+import com.android.graduationproject.data.LoginResponse
+import com.android.graduationproject.data.SessionManager
 import com.android.graduationproject.databinding.ActivityLoginBinding
 import com.android.graduationproject.databinding.ActivityMainBinding
 import com.android.graduationproject.repository.AuthRepository
 import com.android.graduationproject.repository.GetRepository
+import com.android.graduationproject.utils.APIConsumer
+import com.android.graduationproject.utils.APIConsumerImpl
 import com.android.graduationproject.utils.APIService
 import com.android.graduationproject.utils.VibrateView
 import com.android.graduationproject.view_model.LoginActivityViewModel
 import com.android.graduationproject.view_model.LoginActivityViewModelFactory
-import com.android.graduationproject.view_model.MainViewModel
-import com.android.graduationproject.view_model.MainViewModelFactory
+//import com.android.graduationproject.view_model.MainActivityViewModel
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
-    View.OnKeyListener {
+
+class LoginActivity : AppCompatActivity() {
 
     lateinit var btnSignin: Button
     lateinit var edtUsername: EditText
-
+    lateinit var  viewModel: LoginActivityViewModel
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var binding2: ActivityMainBinding
-    private lateinit var ViewModel: LoginActivityViewModel
-    private lateinit var ViewModel2: MainViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(LayoutInflater.from(this))
-        binding2 = ActivityMainBinding.inflate(LayoutInflater.from(this))
+        viewModel  = LoginActivityViewModel(application )
         setContentView(binding.root)
-        binding.btnSignin.setOnClickListener(this)
+        val token = SessionManager.getToken(this)
+        if (!token.isNullOrBlank()) {
+            navigateToHome()
+        }
+        viewModel.loginResult.observe(this) {
+            when (it) {
+                is BaseResponse.Loading -> {
+                    showLoading()
+                }
+
+                is BaseResponse.Success -> {
+                    stopLoading()
+                    //processLogin(it.data)
+                }
+
+                is BaseResponse.Error -> {
+                    processError(it.msg)
+                }
+
+                else -> {
+                    stopLoading()
+                }
+            }
+        }
+        binding.btnSignin.setOnClickListener{
+            doLogin()
+        }
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+       // intent.addFlags(FLAG_ACTIVITY_NO_HISTORY)
+        startActivity(intent)
+    }
+
+    fun doLogin() {
+        val username = binding.edtUsername.text.toString()
+        val password = binding.edtPassword.text.toString()
+        intent = Intent(this@LoginActivity, MainActivity::class.java)
+        intent.putExtra("Username",username)
+        viewModel.loginUser(username = username, password = password)
+        startActivity(intent)
+    }
+
+    fun mainActivity() {
+    }
+
+    fun showLoading() {
+        binding.prgbar.visibility = View.VISIBLE
+    }
+
+    fun stopLoading() {
+        binding.prgbar.visibility = View.GONE
+    }
+
+    fun processLogin(data: LoginResponse?) {
+        showToast("Success:" + data?.user)
+       // if (!data?.token?.isNullOrEmpty()!!) {
+         //   data?.token?.let { SessionManager.saveAuthToken(this, it) }
+            navigateToHome()
+        }
+
+
+    fun processError(msg: String?) {
+        showToast("Error:" + msg)
+    }
+
+    fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+}
+
+
+
+
+    /*    binding.btnSignin.setOnClickListener(this)
         binding.edtUsername.onFocusChangeListener = this
         binding.edtPassword.onFocusChangeListener = this
         binding.edtPassword.setOnKeyListener(this)
-
         btnSignin = findViewById(R.id.btn_signin)
         edtUsername = findViewById(R.id.edt_Username)
 
-        var index = edtUsername.id
-
-
-
-        val getRepository = GetRepository()
-        val viewModelFactory = MainViewModelFactory(getRepository)
-        ViewModel2 =ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        /*ViewModel2.getExamresult()*/
-        ViewModel2.getExamresult2(index.toString())
-        ViewModel = ViewModelProvider(
-            this,
-            LoginActivityViewModelFactory(AuthRepository(APIService.getService()), application)
-        ).get(LoginActivityViewModel::class.java)
-
-        setupObservers()
     }
 
 
+    view
 
     private fun validateUsername(
         shouldUpdateView: Boolean = true,
@@ -184,7 +255,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
 
     override fun onClick(view: View?) {
         val edtusername = edtUsername.text.toString()
-        val intent = Intent(this@LoginActivity, MainViewModel::class.java)
+        intent = Intent(this@LoginActivity, MainActivity::class.java)
         intent.putExtra("Username",edtusername)
         if (view != null) {
             when (view.id) {
@@ -246,6 +317,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         return false
 
     }
-}
+}*/
 
 

@@ -1,50 +1,45 @@
 package com.android.graduationproject.view_model
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.graduationproject.data.BaseResponse
 import com.android.graduationproject.data.LoginBody
+import com.android.graduationproject.data.LoginRequest
+import com.android.graduationproject.data.LoginResponse
 import com.android.graduationproject.data.User
 import com.android.graduationproject.repository.AuthRepository
+import com.android.graduationproject.repository.UserRepository
+import com.android.graduationproject.utils.APIConsumerImpl
 import com.android.graduationproject.utils.AuthToken
 import com.android.graduationproject.utils.RequestStatus
 import kotlinx.coroutines.launch
 
-class LoginActivityViewModel(val authRepository: AuthRepository, val application: Application) :
+class LoginActivityViewModel(application: Application) :
     ViewModel() {
-
-    private var isLoading: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().apply { value = false }
-    private var errorMessage: MutableLiveData<HashMap<String, String>> = MutableLiveData()
-    private var user: MutableLiveData<User> = MutableLiveData()
-
-    fun getIsLoading(): LiveData<Boolean> = isLoading
-    fun getErrorMessage(): LiveData<HashMap<String, String>> = errorMessage
-    fun getUser(): LiveData<User> = user
-
-    fun loginUser(body: LoginBody) {
+        val userRepo = UserRepository()
+        val loginResult: MutableLiveData<BaseResponse<LoginResponse>> =
+            MutableLiveData()
+    fun loginUser(username: String,password : String){
+        loginResult.value = BaseResponse.Loading()
         viewModelScope.launch {
-            authRepository.loginUser(body).collect {
-                when (it) {
-                    is RequestStatus.Waiting -> {
-                        isLoading.value = true
-                    }
-
-                    is RequestStatus.Success -> {
-                        isLoading.value = false
-                        user.value = it.data.user
-                        AuthToken.getInstance(application.baseContext).token = it.data.token
-                    }
-
-                    is RequestStatus.Error -> {
-                        isLoading.value = false
-                        errorMessage.value = it.message
-
-                    }
-                }
+            try {
+                val loginRequest = LoginRequest(
+                    password = password,
+                    username = username
+                )
+                val response = userRepo.loginUser(loginRequest = loginRequest)
+                if (response?.code() == 200) {
+                    loginResult.value = BaseResponse.Success(response.body())
+                } else {
+                    loginResult.value = BaseResponse.Error(response?.message())
             }
+        }catch (ex:Exception) {
+            loginResult.value = BaseResponse.Error(ex.message)
+    }
         }
     }
 }

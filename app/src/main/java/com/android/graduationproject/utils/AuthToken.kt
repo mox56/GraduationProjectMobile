@@ -3,7 +3,7 @@ package com.android.graduationproject.utils
 import android.content.Context
 import android.content.SharedPreferences
 
-class AuthToken private constructor(val context: Context) {
+class AuthToken private constructor(context: Context) {
     companion object {
         private const val TOKEN = "TOKEN"
         private const val TOKEN_VALUE = "TOKEN_VALUE"

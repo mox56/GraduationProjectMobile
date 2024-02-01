@@ -3,12 +3,12 @@
 
 
     <item
-        android:id="@+id/ExamResults"
+        android:id="@+id/req"
         android:icon="@drawable/baseline_results_24"
-        android:title="Exam Results" />
+        android:title="Request Exam Clearance" />
 
     <item
-        android:id="@+id/TimeTable"
+        android:id="@+id/result"
         android:icon="@drawable/baseline_table_chart_24"
-        android:title="Time Table" />
+        android:title="Exam Results" />
 </menu>

@@ -1,40 +1,20 @@
 package com.android.graduationproject.view
 
 
-import android.app.Application
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NO_HISTORY
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.android.graduationproject.R
-import com.android.graduationproject.data.AuthResponse
 import com.android.graduationproject.data.BaseResponse
-import com.android.graduationproject.data.LoginBody
 import com.android.graduationproject.data.LoginResponse
 import com.android.graduationproject.data.SessionManager
 import com.android.graduationproject.databinding.ActivityLoginBinding
-import com.android.graduationproject.databinding.ActivityMainBinding
-import com.android.graduationproject.repository.AuthRepository
-import com.android.graduationproject.repository.GetRepository
-import com.android.graduationproject.utils.APIConsumer
-import com.android.graduationproject.utils.APIConsumerImpl
-import com.android.graduationproject.utils.APIService
-import com.android.graduationproject.utils.VibrateView
 import com.android.graduationproject.view_model.LoginActivityViewModel
-import com.android.graduationproject.view_model.LoginActivityViewModelFactory
+
 //import com.android.graduationproject.view_model.MainActivityViewModel
 
 
@@ -82,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToHome() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, ExamActivity::class.java)
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
        // intent.addFlags(FLAG_ACTIVITY_NO_HISTORY)
         startActivity(intent)
@@ -91,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
     fun doLogin() {
         val username = binding.edtUsername.text.toString()
         val password = binding.edtPassword.text.toString()
-        intent = Intent(this@LoginActivity, MainActivity::class.java)
+        intent = Intent(this@LoginActivity, ExamActivity::class.java)
         intent.putExtra("Username",username)
         viewModel.loginUser(username = username, password = password)
         startActivity(intent)

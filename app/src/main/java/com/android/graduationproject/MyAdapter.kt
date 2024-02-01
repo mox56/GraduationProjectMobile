@@ -21,7 +21,9 @@ class MyAdapter(private  val examList: List<ExamsResult>): RecyclerView.Adapter<
         val coursetv:TextView = itemView.findViewById(R.id.tvCourse)
         val resulttv:TextView = itemView.findViewById(R.id.tvResult)
         val nametv:TextView= itemView.findViewById(R.id.tvname)
-        val requestbtn:Button = itemView.findViewById(R.id.btnreq)
+        /*val requestbtn:Button = itemView.findViewById(R.id.btnreq)*/
+        val semestertv:TextView = itemView.findViewById(R.id.tvSemester)
+        val credithourstv: TextView = itemView.findViewById(R.id.tvCredithours)
 
     }
 
@@ -39,6 +41,9 @@ class MyAdapter(private  val examList: List<ExamsResult>): RecyclerView.Adapter<
         holder.coursetv.text = currentItem.courseCode
         holder.resulttv.text = currentItem.mark
         holder.nametv.text =currentItem.courseName
+        holder.semestertv.text = currentItem.semester
+        holder.credithourstv.text = currentItem.creditHours
+
 
         }
 

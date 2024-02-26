@@ -9,10 +9,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModel
 import com.android.graduationproject.data.BaseResponse
 import com.android.graduationproject.data.LoginResponse
 import com.android.graduationproject.data.SessionManager
 import com.android.graduationproject.databinding.ActivityLoginBinding
+import com.android.graduationproject.utils.VibrateView
 import com.android.graduationproject.view_model.LoginActivityViewModel
 
 //import com.android.graduationproject.view_model.MainActivityViewModel
@@ -49,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
 
                 is BaseResponse.Error -> {
                     processError(it.msg)
+
                 }
 
                 else -> {

@@ -6,10 +6,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class APIService {
-    companion object  {
+    companion object {
         const val BASE_URL = "http://172.20.10.2:8000/"
 
-        fun getRetroInstance():Retrofit{
+        fun getRetroInstance(): Retrofit {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -72,27 +72,27 @@ class APIService {
     }
 }
 
-    /* fun getExamResult2(context: Context, callback: (ExamResult) -> Unit) {
+/* fun getExamResult2(context: Context, callback: (ExamResult) -> Unit) {
 
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    val retrofit: Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-        val service: APIConsumer = retrofit.create<APIConsumer>(APIConsumer::class.java)
-        val response: Response<ExamResult> = service.getExamResult2(("indexNumber"))
-        response.enqueue(object : Response<ExamResult> {
-            override fun onResponse(call: Call<ExamResult>, response: Response<ExamResult>) {
-                if (response!!.isSuccessful) {
-                    val examresult: ExamResult = response.body() as ExamResult
-                    callback(examresult)
-                }
-
+    val service: APIConsumer = retrofit.create<APIConsumer>(APIConsumer::class.java)
+    val response: Response<ExamResult> = service.getExamResult2(("indexNumber"))
+    response.enqueue(object : Response<ExamResult> {
+        override fun onResponse(call: Call<ExamResult>, response: Response<ExamResult>) {
+            if (response!!.isSuccessful) {
+                val examresult: ExamResult = response.body() as ExamResult
+                callback(examresult)
             }
 
-            override fun onFailure(call: Call<ExamResult>, t: Throwable) {
-                // This method is called when the API request fails.
-                Toast.makeText(context, "Request Fail", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }*/
+        }
+
+        override fun onFailure(call: Call<ExamResult>, t: Throwable) {
+            // This method is called when the API request fails.
+            Toast.makeText(context, "Request Fail", Toast.LENGTH_SHORT).show()
+        }
+    })
+}*/

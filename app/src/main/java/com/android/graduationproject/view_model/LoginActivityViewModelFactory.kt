@@ -3,8 +3,6 @@ package com.android.graduationproject.view_model
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.android.graduationproject.repository.AuthRepository
-import com.android.graduationproject.utils.APIConsumerImpl
 import java.security.InvalidParameterException
 
 class LoginActivityViewModelFactory(
@@ -14,7 +12,7 @@ class LoginActivityViewModelFactory(
     @Suppress("UNCHECKED_CASt")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginActivityViewModel::class.java)) {
-            return LoginActivityViewModel( application) as T
+            return LoginActivityViewModel(application) as T
         }
         throw InvalidParameterException("Unable to construct LoginActivityModel")
     }

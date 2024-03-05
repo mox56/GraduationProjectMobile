@@ -1,6 +1,5 @@
 package com.android.graduationproject.data
 
-import android.media.session.MediaSession.Token
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
@@ -9,7 +8,7 @@ data class LoginResponse(
     @SerializedName("user")
     var `user`: User,
 
-) {
+    ) {
     data class User(
         @SerializedName("username")
         var username: String,
@@ -18,5 +17,5 @@ data class LoginResponse(
         @SerializedName("password")
         var password: String,
 
-    )
+        )
 }

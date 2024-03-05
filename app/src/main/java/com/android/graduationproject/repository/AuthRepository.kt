@@ -2,10 +2,9 @@ package com.android.graduationproject.repository
 
 import com.android.graduationproject.data.LoginBody
 import com.android.graduationproject.utils.APIConsumer
-import com.android.graduationproject.utils.APIConsumerImpl
 import com.android.graduationproject.utils.RequestStatus
 import com.android.graduationproject.utils.SimplifiedMessage
-import kotlinx.coroutines.flow.flow as flow
+import kotlinx.coroutines.flow.flow
 
 
 class AuthRepository(val consumer: APIConsumer) {

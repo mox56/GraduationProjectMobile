@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/exams_nav_graph"
     app:startDestination="@id/examResultsFragments">
@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/examResultsFragments"
         android:name="com.android.graduationproject.ui.fragments.ExamResultsFragments"
-        android:label="ExamResultsFragments" >
+        android:label="ExamResultsFragments">
         <action
             android:id="@+id/action_examResultsFragments_to_timetableFragments"
             app:destination="@id/timetableFragments" />
@@ -15,7 +15,7 @@
     <fragment
         android:id="@+id/timetableFragments"
         android:name="com.android.graduationproject.ui.fragments.TimetableFragments"
-        android:label="TimetableFragments" >
+        android:label="TimetableFragments">
         <action
             android:id="@+id/action_timetableFragments_to_examResultsFragments"
             app:destination="@id/examResultsFragments" />

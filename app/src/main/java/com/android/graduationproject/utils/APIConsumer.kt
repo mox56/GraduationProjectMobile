@@ -18,20 +18,20 @@ interface APIConsumer {
         @Body body: LoginBody
     ): Response<AuthResponse>
 
-    @GET ("studentdetail/{indexNumber}/")
-     fun getExamResult(
+    @GET("studentdetail/{indexNumber}/")
+    fun getExamResult(
         @Path("indexNumber") number: String
     ): Call<List<StudentIndex>>
 
-     @GET("studentdetail/{indexNumber/")
-     suspend fun getexamresult(
-         @Path("indexNumber")number: String
+    @GET("studentdetail/{indexNumber/")
+    suspend fun getexamresult(
+        @Path("indexNumber") number: String
 
-     ): Response<ExamResponse>
+    ): Response<ExamResponse>
 
     @GET("studentdetail/{indexNumber/")
     suspend fun getexamlist(
-        @Path("indexNumber")number: String
+        @Path("indexNumber") number: String
 
     ): Call<List<ExamResponse>>
 
